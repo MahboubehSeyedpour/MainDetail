@@ -24,8 +24,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://fakestoreapi.com/\"")
+            android.buildFeatures.buildConfig = true
+            isJniDebuggable = true
+            isDebuggable = true
+        }
         release {
-            isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", "\"https://fakestoreapi.com/\"")
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
