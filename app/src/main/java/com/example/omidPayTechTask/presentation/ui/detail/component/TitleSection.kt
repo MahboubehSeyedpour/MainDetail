@@ -24,7 +24,7 @@ fun TitleSection(title: String) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium.copy(
-                color = Color.DarkGray, fontSize = 15.sp, fontWeight = FontWeight.SemiBold
+                color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.SemiBold
             )
         )
     }

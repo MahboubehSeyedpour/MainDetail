@@ -1,9 +1,9 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,15 +44,26 @@ fun ImageAndStarSection(modifier: Modifier, image: String?, rate: Float, count: 
             Icon(
                 painter = painterResource(id = R.drawable.ic_star),
                 contentDescription = "star",
-                modifier = Modifier.size(18.dp),
-                tint = DarkGray
+                modifier = Modifier.size(32.dp),
+                tint = DarkGray,
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = "$rate (${count})",
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = DarkGray, fontSize = 13.sp, textAlign = TextAlign.Center
+                    color = DarkGray, fontSize = 16.sp, textAlign = TextAlign.Center
                 )
+            )
+        }
+
+        Row(
+            modifier = Modifier.align(Alignment.TopStart),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_bookmark),
+                contentDescription = "bookmark",
+                modifier = Modifier.size(32.dp).clickable { }
             )
         }
     }

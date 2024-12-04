@@ -38,8 +38,8 @@ fun Item(item: ItemModel, onItemClicked: (Int) -> Unit) {
 
     Row(
         modifier = Modifier
-            .padding(12.dp)
-            .clickable { onItemClicked(item.id) },
+            .clickable { onItemClicked(item.id) }
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {

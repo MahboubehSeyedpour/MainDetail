@@ -39,13 +39,11 @@ fun DetailScreen(navController: NavController, viewModel: DetailViewModel = hilt
                 item.rating.count
             )
 
+            TitleSection(item.title)
+
             Spacer(modifier = Modifier.height(16.dp))
 
             PriceAndCategorySection(item.price, item.category)
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            TitleSection(item.title)
 
             Spacer(modifier = Modifier.height(16.dp))
 

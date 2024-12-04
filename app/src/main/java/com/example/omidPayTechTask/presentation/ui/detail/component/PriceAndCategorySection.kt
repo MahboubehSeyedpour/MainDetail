@@ -24,14 +24,14 @@ fun PriceAndCategorySection(price: Float, category: String) {
         Text(
             text = price.toString().plus("$"),
             style = MaterialTheme.typography.titleMedium.copy(
-                color = Color.Gray, fontSize = 15.sp, fontWeight = FontWeight.SemiBold
+                color = Color.Gray, fontSize = 18.sp, fontWeight = FontWeight.SemiBold
             )
         )
 
         Text(
             text = category,
             style = MaterialTheme.typography.titleMedium.copy(
-                color = DarkGray, fontSize = 13.sp, fontWeight = FontWeight.SemiBold
+                color = DarkGray, fontSize = 18.sp, fontWeight = FontWeight.SemiBold
             )
         )
     }
