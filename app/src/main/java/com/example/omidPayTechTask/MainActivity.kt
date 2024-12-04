@@ -11,19 +11,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.omidPayTechTask.domain.model.ItemModel
 import com.example.omidPayTechTask.presentation.navigation.OmidPayBottomNavigation
 import com.example.omidPayTechTask.presentation.navigation.Screens
 import com.example.omidPayTechTask.presentation.navigation.bottomNavItems
+import com.example.omidPayTechTask.presentation.ui.detail.DetailScreen
 import com.example.omidPayTechTask.presentation.ui.home.HomeScreen
 import com.example.omidPayTechTask.ui.theme.OmidPayTechTaskTheme
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,8 +95,19 @@ fun OmidPayApp(modifier: Modifier, navController: NavHostController, viewModel: 
         ) {
 //            composable(Screens.Start.route) { StartScreen(navController) }
             composable(Screens.Home.route) { HomeScreen(navController) }
-//            composable(Screens.Details.route) { LoginScreen(navController) }
-//            composable(Screens.Bookmark.route) { ProfileScreen(navController) }
+            composable(
+                route = "${Screens.Details.route}?item={item}",
+                arguments = listOf(navArgument("item") {
+                    type = NavType.StringType
+//                    type = NavType.ParcelableType(ItemModel::class.java)
+                })
+            ) { backStackEntry ->
+                val item = backStackEntry.arguments?.getParcelable<ItemModel>("item")
+                DetailScreen(navController)
+            }
+
+            //  composable(Screens.Bookmark.route) { BookmarkScreen(navController) }
         }
+
     }
 }

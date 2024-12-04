@@ -1,4 +1,5 @@
 package com.example.omidPayTechTask.presentation.ui.home
 
-class HomeEvents {
+sealed class HomeEvents {
+    class NavigateToDetailScreen(val item: String) : HomeEvents()
 }

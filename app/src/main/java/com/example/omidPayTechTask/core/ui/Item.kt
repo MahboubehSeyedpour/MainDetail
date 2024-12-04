@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,12 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.omidPayTechTask.R
-import com.example.omidPayTechTask.data.remote.model.ItemDTO
+import com.example.omidPayTechTask.domain.model.ItemModel
 import com.example.omidPayTechTask.ui.theme.LightGray
 
 
 @Composable
-fun Item(item: ItemDTO, onItemClicked: (Int) -> Unit) {
+fun Item(item: ItemModel, onItemClicked: (Int) -> Unit) {
 
     Row(
         modifier = Modifier
@@ -45,39 +44,43 @@ fun Item(item: ItemDTO, onItemClicked: (Int) -> Unit) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        Column {
-
-            AsyncImage(
-                model = item.image,
-                contentDescription = "image",
-                modifier = Modifier.size(70.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(5.dp))
-                    .background(LightGray)
-                    .padding(vertical = 3.dp, horizontal = 8.dp)
-            ) {
-                Text(
-                    text = item.price?.toString().plus("$") ?: "",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = Color.Gray, fontSize = 15.sp, fontWeight = FontWeight.SemiBold
-                    )
-                )
-            }
-        }
-
+        ImageAndPriceSection(item)
         ItemDetailSection(item)
 
     }
 }
 
+@Composable
+fun ImageAndPriceSection(item: ItemModel) {
+    Column {
+
+        AsyncImage(
+            model = item.image,
+            contentDescription = "image",
+            modifier = Modifier.size(70.dp)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(5.dp))
+                .background(LightGray)
+                .padding(vertical = 3.dp, horizontal = 8.dp)
+        ) {
+            Text(
+                text = item.price.toString().plus("$"),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = Color.Gray, fontSize = 15.sp, fontWeight = FontWeight.SemiBold
+                )
+            )
+        }
+    }
+}
+
 
 @Composable
-fun ItemDetailSection(item: ItemDTO) {
+fun ItemDetailSection(item: ItemModel) {
     Column(modifier = Modifier.padding(12.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -85,7 +88,7 @@ fun ItemDetailSection(item: ItemDTO) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = item.title!!,
+                text = item.title,
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = Color.Gray, fontSize = 15.sp, fontWeight = FontWeight.SemiBold
                 )
@@ -108,18 +111,19 @@ fun ItemDetailSection(item: ItemDTO) {
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = item.rating?.let { rating ->
+                    text = item.rating.let { rating ->
                         val rateText = rating.rate?.toString() ?: "-"
                         val countText = rating.count?.let { "($it)" } ?: ""
                         rateText + countText
-                    } ?: "-",
+                    },
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = DarkGray, fontSize = 13.sp
                     ))
             }
 
             Text(
-                text = item.category ?: "", style = MaterialTheme.typography.titleMedium.copy(
+                text = item.category,
+                style = MaterialTheme.typography.titleMedium.copy(
                     color = DarkGray, fontSize = 13.sp, fontWeight = FontWeight.SemiBold
                 )
             )
@@ -135,9 +139,12 @@ fun ItemDetailSection(item: ItemDTO) {
         ) {
 
             Text(
-                text = item.description ?: "", style = MaterialTheme.typography.titleMedium.copy(
+                text = item.description,
+                style = MaterialTheme.typography.titleMedium.copy(
                     color = DarkGray, fontSize = 13.sp
-                ), maxLines = 2, overflow = TextOverflow.Ellipsis
+                ),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 

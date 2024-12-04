@@ -1,8 +1,9 @@
 package com.example.omidPayTechTask.domain.usecase
 
 import com.example.omidPayTechTask.data.remote.api.NetworkApiState
-import com.example.omidPayTechTask.data.remote.model.ItemDTO
 import com.example.omidPayTechTask.domain.ResourceState
+import com.example.omidPayTechTask.domain.dto_to_model_mapper.toItemModel
+import com.example.omidPayTechTask.domain.model.ItemModel
 import com.example.omidPayTechTask.domain.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +13,8 @@ import javax.inject.Inject
 
 class GetItemsUseCase @Inject constructor(private val repository: Repository) {
 
-    fun getItems(): Flow<ResourceState<List<ItemDTO>>> =
-        flow<ResourceState<List<ItemDTO>>> {
+    fun getItems(): Flow<ResourceState<List<ItemModel>>> =
+        flow<ResourceState<List<ItemModel>>> {
             repository.getItems().collect { result ->
                 when (result) {
                     is NetworkApiState.Error -> {
@@ -31,7 +32,8 @@ class GetItemsUseCase @Inject constructor(private val repository: Repository) {
                     }
 
                     is NetworkApiState.Success -> {
-                        emit(ResourceState.Success(data = result.data ?: listOf()))
+                        emit(ResourceState.Success(data = result.data?.map { it.toItemModel() }
+                            ?: listOf()))
                     }
                 }
             }
